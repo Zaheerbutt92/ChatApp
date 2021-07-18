@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container">
+        <a class="navbar-brand" routerLink="/"  routerLinkActive="active" >Chat App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <ng-container *ngIf="accountService.currentUser$ | async">
+              <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" routerLink="/users">Users</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" routerLink="/lists">Lists</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" routerLink="/messages">Messages</a>
+              </li>
+            </ng-container>
+          </ul>
+          <div *ngIf="(accountService.currentUser$ | async) as user" class="dropdown" dropdown>
+            <a class="dropdown-toggle text-light" dropdownToggle>Wellcome {{user.username | titlecase}}</a>
+            <div class="dropdown-menu mt-3" *dropdownMenu>
+              <a class="dropdown-item">Edit Profile</a>
+              <div class="dropdown divider"></div>
+              <a class="dropdown-item" (click)="logout()" >Logout</a>
+            </div>
+          </div>
+        </div>
+    </div>
+</nav>

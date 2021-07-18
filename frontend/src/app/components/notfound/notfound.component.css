@@ -1,3 +1,6 @@
+body {
+    background: #dedede;
+}
 .page-wrap {
     min-height: 80vh;
 }
