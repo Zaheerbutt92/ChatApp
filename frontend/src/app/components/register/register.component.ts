@@ -12,8 +12,7 @@ export class RegisterComponent implements OnInit {
   model:any={};
 
   constructor(private accountService:AccountService,
-    private router: Router,
-    private toastr: ToastrService) { }
+    private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -23,10 +22,6 @@ export class RegisterComponent implements OnInit {
       (response) => {
         this.router.navigateByUrl('/');
         console.log(response);
-      },
-      (error) => {
-        console.log(error);
-        this.toastr.error(error.error);
       }
     );
   }

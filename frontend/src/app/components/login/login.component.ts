@@ -13,18 +13,13 @@ export class LoginComponent implements OnInit {
   registerMode = false;
 
   constructor(private accountService: AccountService,
-    private router:Router,
-    private toastr: ToastrService) {}
+    private router:Router) {}
   ngOnInit(): void {}
 
   login() {
     this.accountService.login(this.model).subscribe(response => {
         this.router.navigateByUrl('/');
         console.log(response);
-      },
-      error => {
-        this.toastr.error(error.error);
-        console.log(error);
       }
     );
   }
