@@ -13,7 +13,7 @@ import { ListsComponent } from './components/lists/lists.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { UserListComponent } from './components/users/user-list/user-list.component';
 import { UserDetailComponent } from './components/users/user-detail/user-detail.component';
-import { NotfoundComponent } from './components/errors/notfound/notfound.component';
+import { NotfoundComponent } from './components/notfound/notfound.component';
 import { SharedModule } from './_modules/shared.module';
 import { TestErrorsComponent } from './components/errors/test-errors/test-errors.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
