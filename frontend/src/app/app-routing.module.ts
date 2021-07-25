@@ -30,7 +30,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'users', component: UserListComponent},
-      { path: 'users/:id', component: UserDetailComponent },
+      { path: 'users/:username', component: UserDetailComponent },
       { path: 'lists', component: ListsComponent },
       { path: 'messages', component: MessagesComponent },
     ]

@@ -18,6 +18,8 @@ import { SharedModule } from './_modules/shared.module';
 import { TestErrorsComponent } from './components/errors/test-errors/test-errors.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ServerErrorComponent } from './components/errors/server-error/server-error.component';
+import { UserCardComponent } from './components/users/user-card/user-card.component';
+import { GwtInterceptor } from './_interceptors/gwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { ServerErrorComponent } from './components/errors/server-error/server-er
     UserDetailComponent,
     NotfoundComponent,
     TestErrorsComponent,
-    ServerErrorComponent
+    ServerErrorComponent,
+    UserCardComponent
   ],
   imports: [
     BrowserModule,
@@ -40,10 +43,11 @@ import { ServerErrorComponent } from './components/errors/server-error/server-er
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi:true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi:true},
+    {provide: HTTP_INTERCEPTORS, useClass: GwtInterceptor, multi:true}
   ],
   bootstrap: [AppComponent]
 })

@@ -1,1 +1,5 @@
-<p>user-list works!</p>
+<div class="row mt-5 pt-5">
+    <div class="col-2" *ngFor="let member of members">
+        <app-user-card [member]="member"></app-user-card>
+    </div>
+</div>
