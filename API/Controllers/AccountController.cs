@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,7 +49,7 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserViewModel>> Login(LoginViewModel loginVM)
         {
-            var user = await _context.Users
+            var user = await _context.Users.Include(p => p.Photos)
                 .SingleOrDefaultAsync(x => x.UserName == loginVM.Username.ToLower());
 
             if (user == null) return Unauthorized("Invalid username");
@@ -65,7 +66,8 @@ namespace API.Controllers
 
             return new UserViewModel{
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
             };
         }
 

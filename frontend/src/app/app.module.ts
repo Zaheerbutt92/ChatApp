@@ -20,6 +20,10 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ServerErrorComponent } from './components/errors/server-error/server-error.component';
 import { UserCardComponent } from './components/users/user-card/user-card.component';
 import { GwtInterceptor } from './_interceptors/gwt.interceptor';
+import { UserEditComponent } from './components/users/user-edit/user-edit.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { PhotoEditorComponent } from './components/users/photo-editor/photo-editor.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,9 @@ import { GwtInterceptor } from './_interceptors/gwt.interceptor';
     NotfoundComponent,
     TestErrorsComponent,
     ServerErrorComponent,
-    UserCardComponent
+    UserCardComponent,
+    UserEditComponent,
+    PhotoEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -44,10 +50,12 @@ import { GwtInterceptor } from './_interceptors/gwt.interceptor';
     BrowserAnimationsModule,
     FormsModule,
     SharedModule,
+    NgxSpinnerModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi:true},
-    {provide: HTTP_INTERCEPTORS, useClass: GwtInterceptor, multi:true}
+    {provide: HTTP_INTERCEPTORS, useClass: GwtInterceptor, multi:true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi:true}
   ],
   bootstrap: [AppComponent]
 })
