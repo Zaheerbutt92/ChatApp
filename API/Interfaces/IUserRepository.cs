@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Entities;
+using API.Helpers;
 using API.ViewModels;
 
 namespace API.Interfaces
@@ -12,7 +13,7 @@ namespace API.Interfaces
         Task<IEnumerable<AppUser>> GetUsersAsync();
         Task<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByUsernameAsync(string username);
-        Task<IEnumerable<MemberViewModel>> GetMembersAsync();
+        Task<PagedList<MemberViewModel>> GetMembersAsync(UserParams userParams);
         Task<MemberViewModel> GetMemberByUsernameAsync(string username);
         Task<MemberViewModel> GetMemberByIdAsync(int Id);
     }
