@@ -16,6 +16,11 @@ namespace API.Helpers
             CreateMap<Photo, PhotoViewModel>();
             CreateMap<UserUpdateViewModel,AppUser>();
             CreateMap<RegisterViewModel, AppUser>();
+            CreateMap<Message, MessageViewModel>()
+                .ForMember(dest => dest.SenderPhotoUrl, opt => opt.MapFrom(src => 
+                    src.Sender.Photos.FirstOrDefault(a=>a.IsMain).Url))
+                .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src => 
+                    src.Recipient.Photos.FirstOrDefault(a=>a.IsMain).Url));
         }
     }
 }
