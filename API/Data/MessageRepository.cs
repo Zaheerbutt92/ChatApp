@@ -69,6 +69,7 @@ namespace API.Data
         {
             var query = _context.Messages
                     .OrderByDescending(m => m.MessageSent)
+                    .ProjectTo<MessageViewModel>(_mapper.ConfigurationProvider)
                     .AsQueryable();
 
             query = messageParams.Container switch
@@ -81,27 +82,24 @@ namespace API.Data
                     && u.SenderDeleted == false && u.RecipientDeleted ==false)
             };
 
-            var messages = query.ProjectTo<MessageViewModel>(_mapper.ConfigurationProvider);
-
             return await PagedList<MessageViewModel>
-                .CreateAsync(messages,messageParams.PageNumber,messageParams.PageSize);
+                .CreateAsync(query, messageParams.PageNumber,messageParams.PageSize);
 
         }
 
         public async Task<IEnumerable<MessageViewModel>> GetMessageThread(string currentUsername, string recipientUsername)
         {
             var messages = await _context.Messages
-                    .Include(u => u.Sender).ThenInclude(p => p.Photos)
-                    .Include(u => u.Recipient).ThenInclude(p => p.Photos)
-                    .Where(m => m.Recipient.UserName == currentUsername && m.RecipientDeleted == false
+                   .Where(m => m.Recipient.UserName == currentUsername && m.RecipientDeleted == false
                             && m.Sender.UserName == recipientUsername
                             || m.Recipient.UserName == recipientUsername
                             && m.Sender.UserName == currentUsername && m.SenderDeleted == false
                     )
                     .OrderBy(m => m.MessageSent)
+                    .ProjectTo<MessageViewModel>(_mapper.ConfigurationProvider)
                     .ToListAsync();
 
-            var unreadMessages = messages.Where(m => m.DateRead == null && m.Recipient.UserName == currentUsername).ToList();
+            var unreadMessages = messages.Where(m => m.DateRead == null && m.RecipientUsername == currentUsername).ToList();
 
             if(unreadMessages.Any())
             {
@@ -109,10 +107,9 @@ namespace API.Data
                 {
                     message.DateRead = DateTime.UtcNow;
                 }
-                await _context.SaveChangesAsync();
             }
 
-            return _mapper.Map<IEnumerable<MessageViewModel>>(messages);
+            return messages;
         }
 
         public void RemoveConnection(Connection connection)
@@ -120,9 +117,5 @@ namespace API.Data
             _context.Connections.Remove(connection);
         }
 
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
     }
 }

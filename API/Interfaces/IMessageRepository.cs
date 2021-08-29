@@ -18,6 +18,5 @@ namespace API.Interfaces
         Task<Message> GetMessage(int Id);
         Task<PagedList<MessageViewModel>> GetMessagesForUser(MessageParams messageParams); 
         Task<IEnumerable<MessageViewModel>> GetMessageThread(string currentUsername, string RecipientUsername);
-        Task<bool> SaveAllAsync();
     }
 }
